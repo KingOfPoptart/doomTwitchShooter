@@ -2,6 +2,8 @@
 
 What am I doing with my life?
 
+IRC/Twitch logic shamelessly stolen from https://pastebin.com/F0QKdZeB
+
 Doom WAD files go into ./wads
 
 ```
