@@ -35,18 +35,19 @@ s.send("JOIN #{}\r\n".format(twitchConfig["chat"]["channel"]).encode("utf-8"))
 
 connected = False
 run = True
- 
- 
+
+
 while run:
     response = s.recv(2048).decode("utf-8")
-    if response == "PING :tmi.twitch.tv\r\n":
-        s.send("PONG :tmi.twitch.tv\r\n".encode("utf-8"))
+    if response == "PING :"+twitchConfig["twitch"]["irc_ping"]+"\r\n":
+        s.send("PONG :"+twitchConfig["twitch"]["irc_ping"]+"\r\n".encode("utf-8"))
         put.red('Pong')
     else:
-        logger.info(response)
+        logger.info("\nResponse:\n========================\n"+response.rstrip()+"\n========================")
         username = re.search(r"\w+", response).group(0)
-        CHAT_MSG = re.compile(r"^:\w+!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :")
-       
+        #CHAT_MSG = re.compile(r"^:\w+!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :")
+        CHAT_MSG = re.compile(twitchConfig["chat"]["chat_msg_regex"])
+
         message = CHAT_MSG.sub("", response).rstrip('\n')
         
         #We are connected!
