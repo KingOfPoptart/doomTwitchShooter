@@ -1,6 +1,8 @@
 # doomTwitchShooter
 
+What am I doing with my life?
 
+Doom WAD files go into ./wads
 
 ```
 #Config file stored at ~/.twitch
