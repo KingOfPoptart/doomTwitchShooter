@@ -103,3 +103,4 @@ ENV/
 #Don't upload DOOM WAD files
 *.wad
 
+restful-doom/
