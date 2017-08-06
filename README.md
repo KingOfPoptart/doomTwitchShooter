@@ -2,6 +2,8 @@
 
 Streaming at https://www.twitch.tv/kingofpoptart off my poor, beaten laptop
 
+![Screenshot](doomScreen.png)
+
 ## Setup
 
 Tested and run on OSX 10.12.5
