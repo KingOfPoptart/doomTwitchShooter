@@ -6,12 +6,11 @@ import re
 import time
 import logging
 
-logging.basicConfig(stream=stdout, level=logging.INFO)
-
 
 
 class twitch:
-  def __init__(self, host, port, channel, ircPing='tmi.twitch.tv', 
+  def __init__( self, host, port, channel, 
+                ircPing='tmi.twitch.tv', 
                 chatMsgRgx=r"^:\w+!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :" ):
     self.logger = logging.getLogger('twitchChatClient')
     self.s = socket.socket()

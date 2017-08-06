@@ -1,14 +1,23 @@
-from os.path import expanduser
-from sys import stdout
 import yaml
 import socket
 import re
-import time
 import logging
+import threading
+from time import sleep
+from os.path import expanduser
+from sys import stdout
+
 
 from twitch import twitch
+from doomApiClient import doomApiClient
+from twitchControlMap import twitchControlMap
 
-
+def checkForRestart(doomClient):
+  while True:
+    print doomClient.getHealth()
+    if doomClient.getHealth() < 0:
+      doomClient.restartMap(2,1)
+    sleep(3)
 
 
 #Defaults
@@ -26,7 +35,6 @@ t = twitch( host = twitchConfig["twitch"]["host"],
             chatMsgRgx = twitchConfig["chat"]["chatMessageRegex"])
 
 
-
 logging.basicConfig(stream=stdout, level=logging.INFO)
 logger = logging.getLogger('doomTwitchShooter')
 
@@ -36,6 +44,13 @@ t.connectAndJoin( oauth = twitchConfig["chat"]["oauth"],
 connected = False
 run = True
 
+d = doomApiClient()
+cntrl = twitchControlMap(doomApiClient = d)
+
+
+thread = threading.Thread(target=checkForRestart, args=((d,)))
+thread.daemon = True
+thread.start()
 
 while run:
   response = t.getMsg()
@@ -43,6 +58,8 @@ while run:
     t.pong()
   else:
     chatMessage = t.parseTwitchMessage(response)
+    cntrl.parseAndAct(chatMessage['message'])
+    
     #We are connected!
     if 'End of /NAMES list' in chatMessage['message']:
       connected = True
@@ -53,8 +70,7 @@ while run:
       if 'End of /NAMES list' in chatMessage['message']:
           pass
       else:
-        t.privmsg("Right back at ya!")
- 
+        t.privmsg("Thanks "+chatMessage['username']+'!')
 
   #so we don't send messages too fast
-  time.sleep(twitchConfig['sleepTime'])
+  sleep(twitchConfig['sleepTime'])
