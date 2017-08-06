@@ -16,7 +16,8 @@ def checkForRestart(doomClient):
   while True:
     print doomClient.getHealth()
     if doomClient.getHealth() < 0:
-      doomClient.restartMap(2,1)
+      #doomClient.restartMap(2,1)
+      doomClient.startRandomLevel(3, 9)
     sleep(3)
 
 

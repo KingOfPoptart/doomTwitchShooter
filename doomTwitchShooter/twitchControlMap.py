@@ -23,6 +23,10 @@ class twitchControlMap():
       self.doomApiClient.open()
     elif re.match("[0-9]", message):
       self.doomApiClient.weaponSwitch(int(message.strip()))
+    elif re.match("god", message):
+      self.doomApiClient.toggleGodMode()
+    elif re.match("restart", message):
+      self.doomApiClient.startRandomLevel()
 
 
 if __name__ == "__main__":

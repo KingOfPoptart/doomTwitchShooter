@@ -1,6 +1,7 @@
 import requests
 import logging
 from sys import stdout
+from random import randint
 
 playerApi = 'player'
 actionApi = 'player/actions'
@@ -73,12 +74,24 @@ class doomApiClient:
   def getHealth(self):
     return self._get(playerApi).json()['health']
 
+  def toggleGodMode(self):
+    try:
+      self._get(playerApi).json()['cheatFlags']['CF_GODMODE']
+      self._patch(playerApi, {"cheatFlags":{"CF_GODMODE":False}})
+    except:
+      self._patch(playerApi, {"cheatFlags":{"CF_GODMODE":True}})
+
   def restartMap(self, map = 1, episode = 1):
     self._patch(worldApi , { 
                             "map" : map, 
                             "episode" : episode
                           })
 
+  def startRandomLevel(self, EpisodeLimit = 3, mapLimit = 9):
+    self._patch(worldApi , { 
+                            "episode" : randint(1, EpisodeLimit),
+                            "map" : randint(1, mapLimit)
+                          })
 
 
 
@@ -86,7 +99,7 @@ if __name__ == "__main__":
   logging.basicConfig(stream=stdout, level=logging.INFO)
   d = doomApiClient()
   #d.open()
-  d.weaponSwitch()
+  d.startRandomLevel()
 
   #d.shoot()
 
