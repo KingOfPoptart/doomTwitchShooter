@@ -6,7 +6,7 @@ class twitchControlMap():
     self.doomApiClient = doomApiClient
 
   def parseAndAct(self, message):
-    if re.match("f", message):
+    if re.match("f|fuck", message):
       self.doomApiClient.shoot()
     
     elif re.match("w", message):
