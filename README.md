@@ -47,7 +47,7 @@ d: look right
 
 0-9: switch weapons
 f: shoot
-r: open/use
+e: open/use
 god: toggle godmode
 restart: load random level
 ```
