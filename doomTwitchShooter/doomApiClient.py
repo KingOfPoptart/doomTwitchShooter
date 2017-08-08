@@ -43,8 +43,8 @@ class doomApiClient:
 
   def _patch(self, path, json=None):
     builtUrl = self.buildUrl(path)
-    self.logger.info('POST: '+builtUrl)
-    self.logger.info('POST json: '+str(json))
+    self.logger.info('PATCH: '+builtUrl)
+    self.logger.info('PATCH json: '+str(json))
     r = requests.patch(builtUrl, json=json)
     self.logger.info("Status code: " + str(r.status_code))
     self.logger.info("Response: "+ r.text)
